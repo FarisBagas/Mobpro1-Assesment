@@ -170,24 +170,6 @@ fun koneversi(nominal: Double, jenis:  Boolean): Double{
     }
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 @Composable
 fun IconPicker(isError: Boolean){
     if (isError){
