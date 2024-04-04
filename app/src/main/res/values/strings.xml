@@ -6,7 +6,7 @@
     <string name="usd"> USD $</string>
     <string name="yen"> Yen ¥</string>
     <string name="foto"> Foto dev</string>
-    <string name="uang_x"> </string>
+    <string name="uang_x" translatable="false">Uang </string>
     <string name="hitung_konversi"> Konversi </string>
     <string name="info_aplikasi">Aplikasi konversi mata uang adalah aplikasi yang berfungsi
         untuk mengkonversi nilai rupiah ke nilai mata uang lain</string>
