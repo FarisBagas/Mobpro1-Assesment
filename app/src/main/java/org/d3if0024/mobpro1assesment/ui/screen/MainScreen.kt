@@ -1,6 +1,8 @@
 package org.d3if0024.mobpro1assesment.ui.screen
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -35,6 +37,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.ImeAction
@@ -50,7 +53,7 @@ import org.d3if0024.mobpro1assesment.ui.theme.Mobpro1AssesmentTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(navController: NavHostController) {
-    Scaffold (
+    Scaffold(
         topBar = {
             TopAppBar(title = {
                 Text(text = (stringResource(id = R.string.app_name)))
@@ -61,10 +64,10 @@ fun MainScreen(navController: NavHostController) {
                 ),
                 actions = {
                     IconButton(onClick = {
-                    navController.navigate(Screen.About.route)
+                        navController.navigate(Screen.About.route)
                     }) {
                         Icon(
-                            imageVector = Icons.Filled.Face ,
+                            imageVector = Icons.Filled.Face,
                             contentDescription = stringResource(id = R.string.tentang_aplikasi),
                             tint = MaterialTheme.colorScheme.primary
                         )
@@ -81,122 +84,150 @@ fun MainScreen(navController: NavHostController) {
 
 @SuppressLint("SuspiciousIndentation")
 @Composable
-fun ScreenContent(modifier: Modifier){
+fun ScreenContent(modifier: Modifier) {
 
     var rupiah by rememberSaveable { mutableStateOf("") }
     var rupiahKosong by rememberSaveable { mutableStateOf(false) }
     val radioOption = listOf(
-    stringResource(id = R.string.usd ),
-    stringResource(id = R.string.yen)
+        stringResource(id = R.string.usd),
+        stringResource(id = R.string.yen)
     )
     var mataUang by rememberSaveable { mutableStateOf(radioOption[0]) }
     var hasil by rememberSaveable { mutableDoubleStateOf(0.0) }
 
+    val context = LocalContext.current
 
-    Column (
+
+    Column(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp)
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.spacedBy(12.dp)
 
-    ){
+    ) {
 
         Text(
             text = stringResource(id = R.string.info_aplikasi)
         )
 
-    OutlinedTextField(
-        value =rupiah ,
-        onValueChange = { rupiah = it},
-        isError = rupiahKosong,
-        leadingIcon = { Text(text = "Rp.")},
-        label = { Text(text = stringResource(id = R.string.mata_uang))},
-        trailingIcon = { IconPicker(isError = rupiahKosong)},
-        supportingText = { ErrorHint(isError = rupiahKosong)},
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.Next
-        ),
-        modifier = Modifier.fillMaxWidth()
-    )
+        OutlinedTextField(
+            value = rupiah,
+            onValueChange = { rupiah = it },
+            isError = rupiahKosong,
+            leadingIcon = { Text(text = "Rp.") },
+            label = { Text(text = stringResource(id = R.string.mata_uang)) },
+            trailingIcon = { IconPicker(isError = rupiahKosong) },
+            supportingText = { ErrorHint(isError = rupiahKosong) },
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Number,
+                imeAction = ImeAction.Next
+            ),
+            modifier = Modifier.fillMaxWidth()
+        )
 
-    Row (
-        modifier = Modifier
-            .padding(top = 9.dp)
-            .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
-    ) {
-        radioOption.forEach{text ->
-            MataUangOption(
-                label = text,
-                isSelected = mataUang == text,
-                modifier = Modifier
-                    .selectable(
-                        selected = mataUang == text,
-                        onClick = { mataUang = text },
-                        role = Role.RadioButton
-                    )
-                    .weight(1f)
-                    .padding(16.dp)
-            )
+        Row(
+            modifier = Modifier
+                .padding(top = 9.dp)
+                .border(1.dp, Color.Gray, RoundedCornerShape(4.dp))
+        ) {
+            radioOption.forEach { text ->
+                MataUangOption(
+                    label = text,
+                    isSelected = mataUang == text,
+                    modifier = Modifier
+                        .selectable(
+                            selected = mataUang == text,
+                            onClick = { mataUang = text },
+                            role = Role.RadioButton
+                        )
+                        .weight(1f)
+                        .padding(16.dp)
+                )
 
+            }
         }
-    }
-     Button(
-         onClick = {
-             rupiahKosong =(rupiah == "" || rupiah == "0")
-             if(rupiahKosong)return@Button
+        Button(
+            onClick = {
+                rupiahKosong = (rupiah == "" || rupiah == "0")
+                if (rupiahKosong) return@Button
 
                 hasil = koneversi(rupiah.toDouble(), mataUang == radioOption[0]).toDouble()
 
-             },
-         modifier = Modifier.padding(top = 8.dp),
-         contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
-     ) {
-        Text(text = stringResource(id = R.string.hitung_konversi))
-     }
-
-
-        if (hasil !=0.0){
-            Text( stringResource(id = R.string.hasil, hasil))
+            },
+            modifier = Modifier.padding(top = 8.dp),
+            contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+        ) {
+            Text(text = stringResource(id = R.string.hitung_konversi))
         }
+
+
+        if (hasil != 0.0) {
+            Text(stringResource(id = R.string.hasil, hasil))
+
+            Button(
+                onClick = {
+                    shareData(
+                        context = context,
+                        message = context.getString(R.string.template_bagikan, rupiah, mataUang, hasil)
+                        //rupiah, hasil.toString(), mataUang
+                    )
+                },
+                modifier = Modifier.padding(top = 8.dp),
+                contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
+            ) {
+                Text(text = stringResource(id = R.string.bagikan))
+            }
+        }
+
     }
 }
-fun koneversi(nominal: Double, jenis:  Boolean): Double{
-    return if (jenis != true){
-        (nominal * 0.0095)
+
+fun koneversi(nominal: Double, jenis: Boolean): Double {
+    return if (jenis != true) {
+        (nominal * 0.0095)//untuk yen
     } else {
-        (nominal * 0.000063)
+        (nominal * 0.000063)//untuk usd
     }
 }
 
 @Composable
-fun IconPicker(isError: Boolean){
-    if (isError){
-        Icon(imageVector = Icons.Filled.Warning, contentDescription = null )
+fun IconPicker(isError: Boolean) {
+    if (isError) {
+        Icon(imageVector = Icons.Filled.Warning, contentDescription = null)
     }
 }
 
 @Composable
-fun ErrorHint (isError: Boolean){
-    if (isError){
+fun ErrorHint(isError: Boolean) {
+    if (isError) {
         Text(text = "Input Kosong/Tidak valid") //Ganti pakai string resource error text
     }
 }
 
 @Composable
-fun MataUangOption (label:String, isSelected: Boolean, modifier: Modifier) {
-Row (
-    modifier = modifier,
-    verticalAlignment = Alignment.CenterVertically
-){
-    RadioButton(selected = isSelected, onClick = null)
-    Text(
-        text = label,
-        style = MaterialTheme.typography.bodyLarge,
-        modifier = Modifier.padding(start = 8.dp)
-    )
+fun MataUangOption(label: String, isSelected: Boolean, modifier: Modifier) {
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        RadioButton(selected = isSelected, onClick = null)
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(start = 8.dp)
+        )
+    }
 }
+
+private fun shareData(context: Context, message: String) {
+    val shareIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, message)
+    }
+    if (shareIntent.resolveActivity(context.packageManager) != null) {
+        context.startActivity(shareIntent)
+    }
 }
 
 @Preview(showBackground = true)

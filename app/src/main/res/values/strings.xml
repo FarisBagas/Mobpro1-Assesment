@@ -3,8 +3,8 @@
     <string name="tentang_aplikasi">Tentang aplikasi</string>
     <string name="kembali">Kembali</string>
     <string name="mata_uang">Nominal</string>
-    <string name="usd"> USD $</string>
-    <string name="yen"> Yen ¥</string>
+    <string name="usd"> $USD</string>
+    <string name="yen"> ¥Yen</string>
     <string name="foto"> Foto dev</string>
     <string name="uang_x" translatable="false">Uang </string>
     <string name="hitung_konversi"> Konversi </string>
@@ -15,6 +15,8 @@
 
 
     <string name="hasil">Hasil konversi %1$.2f</string>
+    <string name="bagikan">Bagikan</string>
+    <string name="template_bagikan">Nominal Awal: Rp %1$s \nDi Konversi ke%2$s \nHasil Konversi: %3$.2f </string>
 
 
 
