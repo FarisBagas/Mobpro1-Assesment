@@ -3,11 +3,17 @@
     <string name="tentang_aplikasi">Tentang aplikasi</string>
     <string name="kembali">Kembali</string>
     <string name="mata_uang">Nominal</string>
+    <string name="biodata">ini untuk biodata nantinya</string>
     <string name="usd"> USD $</string>
     <string name="yen"> Yen ¥</string>
+    <string name="uang_x"> </string>
     <string name="hitung_konversi"> Konversi </string>
     <string name="info_aplikasi">Aplikasi konversi mata uang adalah aplikasi yang berfungsi
         untuk mengkonversi nilai rupiah ke nilai mata uang lain</string>
+
+
+    <string name="hasil">Hasil konversi %1$.2f</string>
+
 
 
 </resources>

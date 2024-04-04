@@ -1,5 +1,6 @@
 package org.d3if0024.mobpro1assesment.ui.screen
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,6 +14,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Face
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -26,6 +28,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableDoubleStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -76,15 +79,19 @@ fun MainScreen(navController: NavHostController) {
 
 }
 
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun ScreenContent(modifier: Modifier){
 
     var rupiah by rememberSaveable { mutableStateOf("") }
+    var rupiahKosong by rememberSaveable { mutableStateOf(false) }
     val radioOption = listOf(
     stringResource(id = R.string.usd ),
     stringResource(id = R.string.yen)
     )
     var mataUang by rememberSaveable { mutableStateOf(radioOption[0]) }
+    var hasil by rememberSaveable { mutableDoubleStateOf(0.0) }
+
 
     Column (
         modifier = modifier
@@ -102,8 +109,11 @@ fun ScreenContent(modifier: Modifier){
     OutlinedTextField(
         value =rupiah ,
         onValueChange = { rupiah = it},
+        isError = rupiahKosong,
+        leadingIcon = { Text(text = "Rp.")},
         label = { Text(text = stringResource(id = R.string.mata_uang))},
-        trailingIcon = { Text(text = "Rp")},
+        trailingIcon = { IconPicker(isError = rupiahKosong)},
+        supportingText = { ErrorHint(isError = rupiahKosong)},
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Next
@@ -134,14 +144,61 @@ fun ScreenContent(modifier: Modifier){
     }
      Button(
          onClick = {
-                   /*TODO*/
-                   },
+             rupiahKosong =(rupiah == "" || rupiah == "0")
+             if(rupiahKosong)return@Button
+
+                hasil = koneversi(rupiah.toDouble(), mataUang == radioOption[0]).toDouble()
+
+             },
          modifier = Modifier.padding(top = 8.dp),
          contentPadding = PaddingValues(horizontal = 32.dp, vertical = 16.dp)
      ) {
         Text(text = stringResource(id = R.string.hitung_konversi))
      }
 
+
+        if (hasil !=0.0){
+            Text( stringResource(id = R.string.hasil, hasil))
+        }
+    }
+}
+fun koneversi(nominal: Double, jenis:  Boolean): Double{
+    return if (jenis != true){
+        (nominal * 0.0095)
+    } else {
+        (nominal * 0.000063)
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@Composable
+fun IconPicker(isError: Boolean){
+    if (isError){
+        Icon(imageVector = Icons.Filled.Warning, contentDescription = null )
+    }
+}
+
+@Composable
+fun ErrorHint (isError: Boolean){
+    if (isError){
+        Text(text = "Input Kosong/Tidak valid") //Ganti pakai string resource error text
     }
 }
 
