@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mobpro1Assesment</string>
+    <string name="tentang_aplikasi">About Application</string>
+    <string name="kembali">Back</string>
+    <string name="mata_uang">Currency</string>
+    <string name="usd">" $USD"</string>
+    <string name="yen">" ¥Yen"</string>
+    <string name="hitung_konversi">" Conversion"</string>
+    <string name="info_aplikasi">Currency conversion app is a working app         to convert the rupiah value into another currency value</string>
+    <string name="hasil">Conversion results %1$.2f</string>
+    <string name="foto">Pic Developers</string>
+    <string name="biodata">Hallo Let me introduce myself, my name Faris Bagas Pratama, I am from Tangerang city, and im studying at telkom university, Faculty of Applied Science, D3 Software enginer aplication</string>
+    <string name="bagikan">Share</string>
+    <string name="uang_x">Money</string>
+    <string name="template_bagikan">From curency (IDR):  Rp %1$s to%2$s \nConversion Result:  %3$.2f</string>
+</resources>
