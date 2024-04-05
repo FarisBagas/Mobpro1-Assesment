@@ -1,6 +1,5 @@
 package org.d3if0024.mobpro1assesment.ui.screen
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.border
@@ -68,7 +67,7 @@ fun MainScreen(navController: NavHostController) {
                     }) {
                         Icon(
                             imageVector = Icons.Filled.Face,
-                            contentDescription = stringResource(id = R.string.tentang_aplikasi),
+                            contentDescription = stringResource(id = R.string.tentang_dev),
                             tint = MaterialTheme.colorScheme.primary
                         )
                     }
@@ -82,7 +81,7 @@ fun MainScreen(navController: NavHostController) {
 
 }
 
-@SuppressLint("SuspiciousIndentation")
+
 @Composable
 fun ScreenContent(modifier: Modifier) {
 
@@ -185,6 +184,7 @@ fun ScreenContent(modifier: Modifier) {
 
 fun koneversi(nominal: Double, jenis: Boolean): Double {
     return if (jenis != true) {
+
         (nominal * 0.0095)//untuk yen
     } else {
         (nominal * 0.000063)//untuk usd

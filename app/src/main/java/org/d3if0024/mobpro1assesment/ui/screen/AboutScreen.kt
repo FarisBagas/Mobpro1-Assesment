@@ -42,7 +42,7 @@ fun AboutScreen(navController: NavHostController) {
                }
             },
                 title = {
-                Text(text = (stringResource(id = R.string.tentang_aplikasi)))
+                Text(text = (stringResource(id = R.string.tentang_dev)))
             },
                 colors = TopAppBarDefaults.mediumTopAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,

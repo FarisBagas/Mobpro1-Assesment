@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Mobpro1Assesment</string>
-    <string name="tentang_aplikasi">About Application</string>
+    <string name="tentang_dev">About Developer</string>
     <string name="kembali">Back</string>
     <string name="mata_uang">Currency</string>
     <string name="usd">" $USD"</string>
