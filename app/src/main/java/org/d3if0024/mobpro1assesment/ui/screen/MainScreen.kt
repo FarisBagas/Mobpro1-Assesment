@@ -148,7 +148,7 @@ fun ScreenContent(modifier: Modifier) {
         }
         Button(
             onClick = {
-                rupiahKosong = (rupiah == "" || rupiah == "0")
+                rupiahKosong = (rupiah == "" || rupiah == "0" || rupiah == "-")
                 if (rupiahKosong) return@Button
 
                 hasil = koneversi(rupiah.toDouble(), mataUang == radioOption[0]).toDouble()
